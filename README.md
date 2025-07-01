@@ -6,7 +6,7 @@ FitTrack is a full-stack fitness tracker web app that allows users to log daily 
 A web app where users can log daily workouts, track exercises (e.g. sets/reps, time, distance), and monitor progress over time.
 
 💻 Stack:
- - Backend: Python (Flask) + SQLite (or PostgreSQL if you're comfortable)
+ - Backend: Python (Flask) + SQLite.
 
  - Frontend: HTML/CSS + JavaScript + Bootstrap 5
 

@@ -1,0 +1,56 @@
+/* Customizing elements for the webpage */
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+body::before{
+    content:'';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('RAG_Fitness_Transparent.png') no-repeat center center;
+    background-size: 40%;
+    opacity: 0.3;
+    z-index: -2;
+}
+
+body::after{
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.062),
+        rgb(110, 3, 182));
+    z-index: -1;
+}
+
+.container-fluid{
+    position:relative;
+    z-index: 1;
+}
+
+#siteButton_primary{
+    border-color:#700ac9;
+    background-color: white;
+}
+#homeLink{
+    color: #9d14f9;
+    text-decoration: none;
+}
+
+
+#siteButton_secondary{
+    border-color: #700ac9;
+    background-color: #9d14f9;
+}
+#logLink{
+    color: white;
+    text-decoration: none;
+}

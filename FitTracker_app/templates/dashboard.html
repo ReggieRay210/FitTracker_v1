@@ -23,13 +23,38 @@
 
     <div class="col-sm-6">
         <dl class="fw-bold"> Status:
-            <dt class="fw-light">Current Goal: {{}}</dt>
-            <dt class="fw-light">Fitness Level: {{}}</dt>
-            <dt class="fw-light">Exercise days per Week: {{}}</dt>
+            <dt class="fw-normal">Current Goal: {{ goal_labels[current_user.goal]}}</dt>
+            <dt class="fw-normal">Fitness Level: {{fitness_level_labels[current_user.fitness_level]}}</dt>
+            <dt class="fw-normal">Exercise days per Week: {{exercise_availability_labels[current_user.exercise_availability]}}</dt>
         </dl>
         <div class="container my-3 ">
-            <button class="btn rounded-pill" type="button" id="siteButton_primary">Change Goal?</button>
+            <button class="btn rounded-pill" type="button" id="siteButton_primary" data-bs-toggle="modal" data-bs-target="#goalModal">Change Goal?</button>
         </div>
+        <!-- Add the modal to allow user to change goal. -->
+        
+    </div>
+    <hr>
+
+    <div class="col-12">
+        <h1 class="display-5 fw-bold">Progression Chart</h1>
+        <div class="container my-3 ">
+            <button class="btn rounded-pill" type="button" id="siteButton_primary">Complete Assessment</button>
+        </div>
+        <!-- Add the modal to allow user to change goal. -->
+        <!-- Add the Chart.js chart for visual.  -->
+    </div>
+    <div class="col-12">
+        <h1 class="display-5 fw-bold" >Exercise To-Do:</h1>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Exercise</th>
+                    <th>Target Area</th>
+                    <th>Duration</th>
+                    <th>Completed?</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 

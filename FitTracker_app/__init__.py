@@ -20,16 +20,18 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.init_app(app)
 
-    # imports needed for navigation and functionality
-    # Collects all the pages from routes.py
-    from FitTracker_app.routes import main
-    app.register_blueprint(main)
+    with app.app_context():
+        # imports needed for navigation and functionality
+        # Collects all the pages from routes.py and database information from models.py
+        from FitTracker_app import models, routes
 
-    # retrives user information from the database.
-    from FitTracker_app.models import User
+        # Retrieve the HTML pages for flask to display.
+        app.register_blueprint(routes.main)
+        # Create the db tables
+        db.create_all()
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return models.User.query.get(int(user_id))
 
     return app

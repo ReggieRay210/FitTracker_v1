@@ -25,7 +25,13 @@ def register():
             return redirect(url_for('main.login'))
 
         # Create a new user
-        user = User()
+        user = User(
+            name=form.name.data,
+            email=form.email.data,
+            goal=form.goal.data,
+            fitness_level=form.fitness_level.data,
+            availability=form.exercise_availability.data
+        )
 
         user.set_password(form.password.data)
         db.session.add(user)
@@ -55,12 +61,12 @@ def login():
 # TODO: Within the dashboard, allow users to update their fitness goals and create an assessment. This will use the BS modal popup.
 @main.route('/dashboard', methods=['GET', 'POST'])
 # Ensures that the user is logged in before accessing the dashboard.
-# @login_required
+@login_required
 def dashboard():
     # Ensure that the user is logged in before accessing the dashboard.
-    # if not current_user.is_authenticated:
-    #     flash('Please log in to access the dashboard.', 'warning')
-    #     return redirect(url_for('main.login'))
+    if not current_user.is_authenticated:
+        flash('Please log in to access the dashboard.', 'warning')
+        return redirect(url_for('main.login'))
 
     # Define the labels for the current Status
     goal_labels = {'weight_loss': 'Weight Loss',
@@ -82,6 +88,7 @@ def dashboard():
 
     return render_template('dashboard.html',
                            user=current_user,
+                           goal_labels=goal_labels,
                            fitness_level_labels=fitness_level_labels,
                            exercise_availability_labels=exercise_availability_labels)
 

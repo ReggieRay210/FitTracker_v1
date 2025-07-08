@@ -1,20 +1,20 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from FitTracker_app.forms import registrationForm, loginForm
 from FitTracker_app.models import User
-from FitTracker_app import db
+from FitTracker_app import db, create_app
 # This file defines the routes for the FitTracker pages that is listed in the
 # templates folder.
 
-main = Blueprint('main', __name__)
+app = create_app()
 
 
-@main.route('/')
+@app.route('/')
 def index():
     return render_template('index.html')
 
 
-@main.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = registrationForm()
     if form.validate_on_submit():
@@ -22,7 +22,7 @@ def register():
         existing_user = User.query.filter_by(email=form.email.data).first()
         if existing_user:
             flash('Account already exists. Please Login.', 'warning')
-            return redirect(url_for('main.login'))
+            return redirect(url_for('login'))
 
         # Create a new user
         user = User(
@@ -32,17 +32,16 @@ def register():
             fitness_level=form.fitness_level.data,
             availability=form.exercise_availability.data
         )
-
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Registration successful! Please log in.', 'success')
         # Redirect to login page after registration
-        return redirect(url_for('main.login'))
+        return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
 
-@main.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = loginForm()
     if form.validate_on_submit():
@@ -51,7 +50,7 @@ def login():
             # Log the user in
             login_user(user)
             flash('Login successful!', 'success')
-            return redirect(url_for('main.dashboard'))
+            return redirect(url_for('dashboard'))
         else:
             flash('Invalid email or password. Please try again.', 'danger')
     return render_template('login.html', form=form)
@@ -59,14 +58,14 @@ def login():
 
 # TODO: Create the dashboard page that will display the user's fitness goals, progress, and other relevant information.
 # TODO: Within the dashboard, allow users to update their fitness goals and create an assessment. This will use the BS modal popup.
-@main.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard', methods=['GET', 'POST'])
 # Ensures that the user is logged in before accessing the dashboard.
 @login_required
 def dashboard():
     # Ensure that the user is logged in before accessing the dashboard.
     if not current_user.is_authenticated:
         flash('Please log in to access the dashboard.', 'warning')
-        return redirect(url_for('main.login'))
+        return redirect(url_for('login'))
 
     # Define the labels for the current Status
     goal_labels = {'weight_loss': 'Weight Loss',
@@ -93,9 +92,9 @@ def dashboard():
                            exercise_availability_labels=exercise_availability_labels)
 
 
-@main.route('/logout')
+@app.route('/logout')
 @login_required
 def logout():
     # Log the user out
     logout_user()
-    return redirect(url_for('main.index'))  # Redirect to the index page
+    return redirect(url_for('index'))  # Redirect to the index page

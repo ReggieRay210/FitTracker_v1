@@ -35,8 +35,8 @@ class registrationForm(FlaskForm):
     """Form for user registration."""
     name = StringField('Name', validators=[
                        DataRequired(), Length(min=2, max=80)])
-    email = StringField('Email', validators=[DataRequired(), Email(
-        check_deliverability=True), email_check])
+    email = StringField('Email', validators=[DataRequired(), Email(),
+                                             email_check])
     password = PasswordField('Password', validators=[
                              DataRequired(), password_complexity])
     confirm_password = PasswordField('Confirm Password', validators=[
@@ -69,7 +69,7 @@ class registrationForm(FlaskForm):
 class loginForm(FlaskForm):
     """Form for user login."""
     email = StringField('Email', validators=[
-                        DataRequired(), Email(check_deliverability=True)])
+                        DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 

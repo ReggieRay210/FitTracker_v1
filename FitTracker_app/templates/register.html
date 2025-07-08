@@ -1,0 +1,73 @@
+<!--In Order to use web app, user must register an account. 
+Will need Users Name, e-mail, password and current fitness goal, level and exercise availability. -->
+<!-- Collects the base template and extends it with specific content. -->
+{% extends "base.html" %}  
+
+{% block title %}FitTracker | Registration{% endblock %}
+
+{% block homeLink %}
+    <a href="{{url_for('main.index')}}" id="homeLink">Home</a>
+{% endblock %}
+
+{% block pageContent %}
+<div class="text-center">
+    <h1 class="display-5 fw-bold mt-3">User Account Registration</h1>
+    <p class="lead">Register an account to get started. </p>
+
+    <!-- create form for user registration. -->
+    <form action='#' method="POST">
+        {{form.hidden_tag()}}
+        <div class="container-sm">
+            <div class="mb-3">
+                {{form.name.label(class='fw-bold')}}
+                {{form.name(class='form-control', id=name, placeholder='Enter your First Name', required=True)}}
+            </div>
+
+            <div class="mb-3">
+                {{form.email.label(class='fw-bold')}}
+                {{form.email(class='form-control', id=email, placeholder='Enter your email', required=True)}}
+                {% for error in form.email.errors %}
+                    <div class="text-danger small fw-bold">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{form.password.label(class='fw-bold')}}
+                {{form.password(class='form-control', id=password, placeholder='Enter your password', required=True)}}
+                {% for error in form.password.errors %}
+                    <div class="text-danger small fw-bold">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-5">
+                {{form.confirm_password.label(class='fw-bold')}}
+                {{form.confirm_password(class='form-control', id=confirm_password, placeholder='Confirm your password', required=True)}}
+                {% for error in form.confirm_password.errors %}
+                    <div class="text-danger small fw-bold">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <hr>
+
+            <div class="mb-3">
+                {{form.goal.label(class='fw-bold')}}
+                {{form.goal(class='form-control', id=goal, required=True)}}
+            </div>
+
+            <div class="mb-3">
+                {{form.fitness_level.label(class='fw-bold')}}
+                {{form.fitness_level(class='form-control', id=fitness_level, required=True)}}
+            </div>
+
+            <div class="mb-3">
+                {{form.exercise_availability.label(class="fw-bold")}}
+                {{form.exercise_availability(class='form-control', id=exercise_availability, required=True) }}
+            </div>
+            <button type="submit" class="btn btn-lg rounded-pill px-4 py-1 mb-4" id="siteButton_primary" >Register</button>
+        </div>
+    </form>
+
+    <!-- allow user to naviate to the login page if they already have an account -->
+    <p class='fw-bold'>Already have an account? Click <a href="{{ url_for('main.login') }}" id="logLink" style="font-weight: bolder;">Here</a> to login.</p>
+
+</div>
+{% endblock %}

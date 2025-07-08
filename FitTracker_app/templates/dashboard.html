@@ -1,0 +1,36 @@
+<!--Upon successful user login. User will receive a tailored dashboard with their own information. -->
+<!--Retrieve the users assessment in order to have a true tailored workout plan and progression tracker.-->
+<!-- Collects the base template and extends it with specific content. -->
+{% extends "base.html" %}  
+{% block title %}Dashboard | FitTracker{% endblock %}
+
+{% block navButton %}
+<!-- hide home button -->
+<button style="display:none;"></button>
+{% endblock %}
+
+{%block logButton%} 
+    <a href="{{url_for('main.logout')}}" id="logLink">Logout</a>
+{%endblock%}
+
+{% block pageContent %}
+<!-- page information goes here -->
+<div class="row m-0 col-lg text-center" >
+    <h1 class="display-4 mb-5 fw-bold">Dashboard</h1>
+    <div class="col-sm-6">
+        <h1 class="display-6 fw-bold">Welcome, {{current_user.name}}!</h1>
+    </div>
+
+    <div class="col-sm-6">
+        <dl class="fw-bold"> Status:
+            <dt class="fw-light">Current Goal: {{}}</dt>
+            <dt class="fw-light">Fitness Level: {{}}</dt>
+            <dt class="fw-light">Exercise days per Week: {{}}</dt>
+        </dl>
+        <div class="container my-3 ">
+            <button class="btn rounded-pill" type="button" id="siteButton_primary">Change Goal?</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

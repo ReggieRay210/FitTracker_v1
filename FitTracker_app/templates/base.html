@@ -17,9 +17,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
 
-    <body class="container-fluid">
-        <nav class="navbar navbar-expend-md border-bottom border-dark">
-            <div class="container">
+    <body>
+        <nav class="navbar navbar-expand-sm border-bottom border-dark">
+            <div class="container-fluid">
                 <img src="{{url_for('static', filename='RAG_Fitness_Transparent.png')}}" alt="site logo" style="width:70px">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -30,14 +30,14 @@
                         {% block navButton %}
                         <button class="btn rounded-pill" type="button" id="siteButton_primary">
                             {% block homeLink %}
-                            <a href="#" id="homeLink">Register</a>
+                            <a href="{{ url_for('main.register')}}" id="homeLink">Register</a>
                             {% endblock %}
                         </button>
                         {% endblock %}
 
                         <button class="btn rounded-pill" type="button" id="siteButton_secondary">
                             {% block logButton %}
-                            <a href="#" id="logLink">Login</a>
+                            <a href="{{ url_for('main.login') }}" id="logLink">Login</a>
                             {% endblock %}
                         </button>
                     </div>
@@ -45,12 +45,12 @@
             </div>
         </nav>
 
-        <div class="justify-content-center bg-white bg-opacity-10 align-items-center min-vh-100">
+        <div class="justify-content-center align-items-center min-vh-100">
         {% block pageContent %}{% endblock %}
         </div>
     </body> 
-    <footer class="mt-4 text-lg-start">
-        <div class="text-center p-3">
+    <footer class="mt-2 text-lg-start">
+        <div class="text-center p-0">
             <p class="text-muted">© 2025 FitTracker. All rights reserved.</p>
         </div>
     </footer>

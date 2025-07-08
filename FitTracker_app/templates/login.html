@@ -1,0 +1,35 @@
+<!--After user registers, user will have to login with username/password to gain acces to dashboard. -->
+<!-- Collects the base template and extends it with specific content. -->
+{% extends "base.html" %}  
+
+{% block title %}FitTracker | Login{% endblock %}
+
+{% block homeLink%}
+    <a href="{{url_for('main.index')}}" id="homeLink">Home</a>
+{% endblock %}
+
+{% block logButton %}
+    <a href="{{ url_for('main.register') }}" id="logLink">Register</a>
+{% endblock %}
+{% block pageContent %}
+<div class="text-center">
+    <h1>Login</h1>
+    <!-- Display email/password form here -->
+    <form action="#" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="container-sm">
+            <div class="mb-3" >
+                {{ form.email.label(class='fw-bold')}}
+                {{ form.email(class='form-control', id='email', placeholder='Enter your email', required=True) }}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class='fw-bold')}}
+                {{ form.password(class='form-control', id='password', placeholder='Enter your password', required=True) }}
+            </div>
+        </div>    
+        {{form.submit(class="btn btn-lg rounded-pill px-4 py-1 mb-4", id="siteButton_primary")}}
+    </form>
+    <!-- Allow user to register if they don't have an account -->
+    <p class='fw-bold'>Don't have an account? Click <a href="{{ url_for('main.register') }}" id="logLink" style="font-weight: bolder;">Here</a> to Register.</p>
+</div>
+{% endblock %}

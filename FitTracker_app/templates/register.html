@@ -6,7 +6,7 @@ Will need Users Name, e-mail, password and current fitness goal, level and exerc
 {% block title %}FitTracker | Registration{% endblock %}
 
 {% block homeLink %}
-    <a href="{{url_for('main.index')}}" id="homeLink">Home</a>
+    <a href="{{url_for('index')}}" id="homeLink">Home</a>
 {% endblock %}
 
 {% block pageContent %}
@@ -67,7 +67,7 @@ Will need Users Name, e-mail, password and current fitness goal, level and exerc
     </form>
 
     <!-- allow user to naviate to the login page if they already have an account -->
-    <p class='fw-bold'>Already have an account? Click <a href="{{ url_for('main.login') }}" id="logLink" style="font-weight: bolder;">Here</a> to login.</p>
+    <p class='fw-bold'>Already have an account? Click <a href="{{ url_for('login') }}" id="logLink" style="font-weight: bolder;">Here</a> to login.</p>
 
 </div>
 {% endblock %}

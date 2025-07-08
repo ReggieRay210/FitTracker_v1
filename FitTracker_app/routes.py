@@ -1,12 +1,11 @@
 from flask import render_template, redirect, url_for, flash
+from flask import current_app as app
 from flask_login import login_user, logout_user, login_required, current_user
 from FitTracker_app.forms import registrationForm, loginForm
 from FitTracker_app.models import User
-from FitTracker_app import db, create_app
+from FitTracker_app import db
 # This file defines the routes for the FitTracker pages that is listed in the
 # templates folder.
-
-app = create_app()
 
 
 @app.route('/')

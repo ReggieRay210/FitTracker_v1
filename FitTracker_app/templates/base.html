@@ -30,14 +30,14 @@
                         {% block navButton %}
                         <button class="btn rounded-pill" type="button" id="siteButton_primary">
                             {% block homeLink %}
-                            <a href="{{ url_for('main.register')}}" id="homeLink">Register</a>
+                            <a href="{{ url_for('register')}}" id="homeLink">Register</a>
                             {% endblock %}
                         </button>
                         {% endblock %}
 
                         <button class="btn rounded-pill" type="button" id="siteButton_secondary">
                             {% block logButton %}
-                            <a href="{{ url_for('main.login') }}" id="logLink">Login</a>
+                            <a href="{{ url_for('login') }}" id="logLink">Login</a>
                             {% endblock %}
                         </button>
                     </div>

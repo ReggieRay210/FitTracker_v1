@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask import current_app as app
 from flask_login import login_user, logout_user, login_required, current_user
-from FitTracker_app.forms import registrationForm, loginForm, updateGoalForm
+from FitTracker_app.forms import registrationForm, loginForm, updateGoalForm, assessmentForm
 from FitTracker_app.models import User
 from FitTracker_app import db
 # This file defines the routes for the FitTracker pages that is listed in the
@@ -45,15 +45,21 @@ def register():
 def login():
     form = loginForm()
     if form.validate_on_submit():
+        # Check if the user exists.
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.check_password(form.password.data):
+        if not user:
+            flash('Account not found. Please register.', 'danger')
+            return render_template('login.html', form=form)
+        
+        # Check if the password is correct
+        if user.check_password(form.password.data):
             # Log the user in
             login_user(user)
             flash('Login successful!', 'success')
             return redirect(url_for('dashboard'))
         else:
             flash('Invalid email or password. Please try again.', 'danger')
-    return render_template('dashboard.html', form=form)
+    return render_template('login.html', form=form)
 
 
 # TODO: Create the dashboard page that will display the user's fitness goals, progress, and other relevant information.
@@ -87,6 +93,28 @@ def dashboard():
         flash('Your fitness goals have been updated successfully!', 'success')
         return redirect(url_for('dashboard'))
 
+    # TODO: Create a route that will display the user's assessment results.
+    assessment_form = assessmentForm()
+    if assessment_form.validate_on_submit():
+        # Save the assessment results to the database
+        current_user.weight = assessment_form.weight.data
+        current_user.age = assessment_form.age.data
+        current_user.push_ups = assessment_form.push_ups.data
+        current_user.sit_ups = assessment_form.sit_ups.data
+        current_user.squats = assessment_form.squats.data
+        current_user.restingHeartRate = assessment_form.restingHeartRate.data
+        current_user.halfMileTime = assessment_form.halfMileTime.data
+        current_user.shoulders = assessment_form.shoulders.data
+        current_user.chest = assessment_form.chest.data
+        current_user.biceps = assessment_form.biceps.data
+        current_user.forearms = assessment_form.forearms.data
+        current_user.waist = assessment_form.waist.data
+        current_user.hips = assessment_form.hips.data
+        current_user.thigh = assessment_form.thigh.data
+        current_user.calves = assessment_form.calves.data
+        db.session.commit()
+        flash('Your assessment has been saved successfully!', 'success')
+        return redirect(url_for('dashboard'))
     # Define the labels for the current Status
     goal_labels = {'weight_loss': 'Weight Loss',
                    'muscle_gain': 'Muscle Gain',

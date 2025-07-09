@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, FloatField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField, FloatField
 from wtforms.validators import DataRequired, Email, Length, Optional, NumberRange, ValidationError, EqualTo
 import re
 
@@ -78,6 +78,29 @@ class loginForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is None:
             raise ValidationError('Account not found. Please register.')
+
+
+class assessmentForm(FlaskForm):
+    """Form for user assessment."""
+    weight = FloatField('Weight (lbs)', validators=[Optional(), NumberRange(min=0)])
+    age = IntegerField('Age', validators=[Optional(), NumberRange(min=0)])
+
+    push_ups = IntegerField('Push-ups (in 1 minute)', validators=[Optional(), NumberRange(min=0)])
+    sit_ups = IntegerField('Sit-ups (in 1 minute)', validators=[Optional(), NumberRange(min=0)])
+    squats = IntegerField('Squats (in 1 minute)', validators=[Optional(), NumberRange(min=0)])
+    restingHeartRate = IntegerField('Resting Heart Rate (BPM)', validators=[Optional(), NumberRange(min=30, max=200)])
+    halfMileTime = FloatField('Half-Mile Time (minutes)', validators=[Optional(), NumberRange(min=1)])
+
+    shoulders = FloatField('Shoulders (inches)', validators=[Optional(), NumberRange(min=0)])
+    chest = FloatField('Chest (inches)', validators=[Optional(), NumberRange(min=0)])
+    biceps = FloatField('Biceps (inches)', validators=[Optional(), NumberRange(min=0)])
+    forearms = FloatField('Forearms (inches)', validators=[Optional(), NumberRange(min=0)])
+    waist = FloatField('Waist (inches)', validators=[Optional(), NumberRange(min=0)])
+    hips = FloatField('Hips (inches)', validators=[Optional(), NumberRange(min=0)])
+    thigh = FloatField('Thighs (inches)', validators=[Optional(), NumberRange(min=0)])
+    calves = FloatField('Calves (inches)', validators=[Optional(), NumberRange(min=0)])
+
+    submit = SubmitField('Complete Assessment')
 
 class updateGoalForm(FlaskForm):
     """Form for updating user fitness goals and information."""

@@ -30,7 +30,39 @@
         <div class="container my-3 ">
             <button class="btn rounded-pill" type="button" id="siteButton_primary" data-bs-toggle="modal" data-bs-target="#goalModal">Change Goal?</button>
         </div>
-        <!-- Add the modal to allow user to change goal. -->
+        
+        <!-- Modal for updating fitness goals -->
+        <div class="modal fade" id="goalModal" tabindex="-1" aria-labelledby="goalModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="goalModalLabel">Update Your Fitness Goals</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST">
+                        <div class="modal-body">
+                            {{ update_form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ update_form.goal.label(class="form-label") }}
+                                {{ update_form.goal(class="form-select") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ update_form.fitness_level.label(class="form-label") }}
+                                {{ update_form.fitness_level(class="form-select") }}
+                            </div>
+                            <div class="mb-3">
+                                {{ update_form.exercise_availability.label(class="form-label") }}
+                                {{ update_form.exercise_availability(class="form-select") }}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            {{ update_form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         
     </div>
     <hr>
@@ -57,5 +89,20 @@
         </table>
     </div>
 </div>
+
+<!-- JavaScript to handle modal behavior -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if there's a success flash message (indicating successful update)
+    const successMessages = document.querySelectorAll('.alert-success');
+    if (successMessages.length > 0) {
+        // Close the modal if it's open
+        const modal = bootstrap.Modal.getInstance(document.getElementById('goalModal'));
+        if (modal) {
+            modal.hide();
+        }
+    }
+});
+</script>
 
 {% endblock %}

@@ -13,7 +13,7 @@ def email_check(form, field):
 
 def password_complexity(form, field):
     """Custom validator to check password complexity."""
-    password = field.DateRangeField
+    password = field.data
     if len(password) < 8:
         raise ValidationError('Password must be at least 8 characters long.')
     if password == 'password':
@@ -79,5 +79,29 @@ class loginForm(FlaskForm):
         if user is None:
             raise ValidationError('Account not found. Please register.')
 
-# TODO: Create Goal update form to allow users to update their fitness goals.
+class updateGoalForm(FlaskForm):
+    """Form for updating user fitness goals and information."""
+    goal = SelectField('Goal', choices=[
+        ('weight_loss', 'Weight Loss'),
+        ('muscle_gain', 'Muscle Gain'),
+        ('endurance', 'Endurance'),
+        ('general_wellness', 'General Wellness')],
+        validators=[DataRequired()])
+
+    fitness_level = SelectField('Fitness Level', choices=[
+        ('beginner', 'Beginner'),
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced')],
+        validators=[DataRequired()])
+
+    exercise_availability = SelectField('Days per week for exercise',
+                                        choices=[('1', '1 day'),
+                                                 ('2', '2 days'),
+                                                 ('3', '3 days'),
+                                                 ('4', '4 days'),
+                                                 ('5+', '5+ days')],
+                                        validators=[DataRequired()])
+    submit = SubmitField('Update Goals')
+
+
 # TODO: Create assessment form to allow user to input their fitness assessment data.

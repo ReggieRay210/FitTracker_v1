@@ -1,7 +1,7 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask import current_app as app
 from flask_login import login_user, logout_user, login_required, current_user
-from FitTracker_app.forms import registrationForm, loginForm
+from FitTracker_app.forms import registrationForm, loginForm, updateGoalForm
 from FitTracker_app.models import User
 from FitTracker_app import db
 # This file defines the routes for the FitTracker pages that is listed in the
@@ -24,14 +24,15 @@ def register():
             return redirect(url_for('login'))
 
         # Create a new user
-        user = User(
-            name=form.name.data,
-            email=form.email.data,
-            goal=form.goal.data,
-            fitness_level=form.fitness_level.data,
-            availability=form.exercise_availability.data
-        )
+        user = User()
+        user.name = form.name.data
+        user.email = form.email.data
+        user.goal = form.goal.data
+        user.fitness_level = form.fitness_level.data
+        user.exercise_availability = form.exercise_availability.data
         user.set_password(form.password.data)
+
+        # Add the user to the database
         db.session.add(user)
         db.session.commit()
         flash('Registration successful! Please log in.', 'success')
@@ -52,7 +53,7 @@ def login():
             return redirect(url_for('dashboard'))
         else:
             flash('Invalid email or password. Please try again.', 'danger')
-    return render_template('login.html', form=form)
+    return render_template('dashboard.html', form=form)
 
 
 # TODO: Create the dashboard page that will display the user's fitness goals, progress, and other relevant information.
@@ -65,6 +66,26 @@ def dashboard():
     if not current_user.is_authenticated:
         flash('Please log in to access the dashboard.', 'warning')
         return redirect(url_for('login'))
+
+    # Create the update form and pre-populate with current values
+    update_form = updateGoalForm()
+    if request.method == 'GET':
+        update_form.goal.data = current_user.goal
+        update_form.fitness_level.data = current_user.fitness_level
+        update_form.exercise_availability.data = current_user.exercise_availability
+    
+    # Handle form submission
+    if update_form.validate_on_submit():
+        # Update the user's information
+        current_user.goal = update_form.goal.data
+        current_user.fitness_level = update_form.fitness_level.data
+        current_user.exercise_availability = update_form.exercise_availability.data
+        
+        # Save changes to database
+        db.session.commit()
+        
+        flash('Your fitness goals have been updated successfully!', 'success')
+        return redirect(url_for('dashboard'))
 
     # Define the labels for the current Status
     goal_labels = {'weight_loss': 'Weight Loss',
@@ -86,6 +107,7 @@ def dashboard():
 
     return render_template('dashboard.html',
                            user=current_user,
+                           update_form=update_form,
                            goal_labels=goal_labels,
                            fitness_level_labels=fitness_level_labels,
                            exercise_availability_labels=exercise_availability_labels)

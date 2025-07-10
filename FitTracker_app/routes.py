@@ -115,6 +115,7 @@ def dashboard():
         db.session.commit()
         flash('Your assessment has been saved successfully!', 'success')
         return redirect(url_for('dashboard'))
+
     # Define the labels for the current Status
     goal_labels = {'weight_loss': 'Weight Loss',
                    'muscle_gain': 'Muscle Gain',

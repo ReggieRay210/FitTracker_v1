@@ -107,12 +107,14 @@
                                 <div class="col">{{ assessment_form.forearms.label(class="form-label") }} {{ assessment_form.forearms(class="form-control") }}</div>
                                 <div class="col">{{ assessment_form.waist.label(class="form-label") }} {{ assessment_form.waist(class="form-control") }}</div>
                                 <div class="col">{{ assessment_form.hips.label(class="form-label") }} {{ assessment_form.hips(class="form-control") }}</div>
+                                <div class="col">{{ assessment_form.thigh.label(class="form-label") }} {{ assessment_form.thigh(class="form-control") }}</div>
+                                <div class="col">{{ assessment_form.calves.label(class="form-label") }} {{ assessment_form.calves(class="form-control") }}</div>
                             </div>
                         </div>
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Complete Assessment</button>
+                        {{assessment_form.submit(class="btn btn-primary")}}
                     </div>
                 </div>
             </div>
